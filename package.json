@@ -11,10 +11,6 @@
     "stop": "lsof -ti :3000 | xargs kill",
     "mongo:stop": "docker stop realworld-mongo && docker rm realworld-mongo"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gothinkster/productionready-node-api.git"
-  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",

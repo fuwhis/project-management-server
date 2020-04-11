@@ -1,4 +1,4 @@
-var http = require('http'),
+var 
   path = require('path'),
   methods = require('methods'),
   express = require('express'),
@@ -46,14 +46,6 @@ if (isProduction) {
   });
 
 }
-
-require('./models/User');
-require('./models/Article');
-require('./models/Comment');
-require('./config/passport');
-require('./models/Member');
-require('./models/Project');
-require('./models/User');
 
 app.use(require('./routes'));
 

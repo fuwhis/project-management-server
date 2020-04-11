@@ -17,5 +17,4 @@ ProjectSchema.methods.updatePrj = function (id) {
   return this.save();
 }
 
-
-mongoose.model('Project', ProjectSchema); 
+module.exports = mongoose.model('Project', ProjectSchema); 

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var router = require('express').Router();
 var passport = require('passport');
-var User = mongoose.model('User');
+var User = require("../../models/User");
 var auth = require('../auth');
 
 router.get('/user', auth.required, function(req, res, next){
@@ -60,15 +60,16 @@ router.post('/users/login', function(req, res, next){
   })(req, res, next);
 });
 
+// create new user 
 router.post('/users', function(req, res, next){
   var user = new User();
 
   user.username = req.body.user.username;
   user.email = req.body.user.email;
-  user.setPassword(req.body.user.password);
+  // user.setPassword(req.body.user.password);
 
   user.save().then(function(){
-    return res.json({user: user.toAuthJSON()});
+    return res.json({user});
   }).catch(next);
 });
 

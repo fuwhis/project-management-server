@@ -26,7 +26,7 @@ MemberSchema.methods.addMember = function () {
     birthdate: this.birthdate
   }
 }
-
+//với lại cái này a nên dùng findOneAnđUpate
 MemberSchema.methods.updateMember = function (member_id) {
   if (this.member_id.indexOf(member_id) === -1) {
     // notify this mem not exist
@@ -34,5 +34,4 @@ MemberSchema.methods.updateMember = function (member_id) {
   return this.save();
 }
 
-
-mongoose.model('Member', MemberSchema);
+module.exports = mongoose.model('Member', MemberSchema);
