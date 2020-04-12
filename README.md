@@ -1,6 +1,6 @@
 # [Node/Express/Mongoose Example App]
 
-[![Version|(0.1.0)]
+[![Build|()]]()
 
 > ### Example Node (Express + Mongoose) codebase containing basic project management application (CRUD, auth, advanced patterns, etc)
 
