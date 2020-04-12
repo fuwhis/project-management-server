@@ -2,16 +2,6 @@ var mongoose = require('mongoose');
 var router = require('express').Router();
 var Member = require("../../models/Member");
 
-// router.param('member', function (req, res, next, mname) {
-//   Member.findOne({ member: mname }).then(function (member) {
-//     if (!member) {
-//       return res.sendStatus(404);
-//     }
-//     console.log('------member findOne'); 
-//     return next();
-//   }).catch(next);
-// });
-
 router.get('/', function (req, res, next) {
   if (req.payload) {
     Member.findById(req.params.id).then(function () {
