@@ -1,6 +1,6 @@
 # [Node/Express/Mongoose Example App]
 
-[![Build|()]]()
+<!-- [![](https://travis-ci.org/typicode/json-server.svg?branch=master)](https://travis-ci.org/typicode/json-server) [![](https://badge.fury.io/js/json-server.svg)](http://badge.fury.io/js/json-server) -->
 
 > ### Example Node (Express + Mongoose) codebase containing basic project management application (CRUD, auth, advanced patterns, etc)
 
