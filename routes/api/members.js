@@ -2,54 +2,68 @@ var mongoose = require('mongoose');
 var router = require('express').Router();
 var Member = require("../../models/Member");
 
-router.get('/', function (req, res, next) {
-  if (req.payload) {
-    Member.findById(req.params.id).then(function () {
-      //
-    });
-  } else {
-    return res.json({ member: req.member.toMemberJSON(false) })
-  }
-});
-
 // create new member
-router.post('/create-member', function (req, res, next) {
-  Member.findById(req.payload.id).then(function (member) {
-    if (!member) {
-      return res.sendStatus(401);
-    }
-
-    var member = new Member();
-
-    member.member_name = req.body.member.member_name;
-    member.phone = req.body.member.phone;
-    member.birthdate = req.body.member.birthdate;
-
-    return member.save().then(function () {
-      return res.json({ member })
-    })
+router.post('/members/create-member', (req, res) => {
+  // Create a member
+  const member = new Member({
+    member_name: req.body.member.member_name,
+    phone: req.body.member.phone,
+    birthdate: req.body.member.birthdate,
   });
+  // Save Member in the db
+  member.save()
+    .then(member => {
+      res.json(member);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some errors occured while creating a new Member.'
+      })
+    })
 });
 
 // update member
-router.patch('/update-member/:id', function (req, res, next) {
-  Member.findByIdAndUpdate(req.payload.id, req.body, { new: true }, function (err, member) {
-    if (err) {
-      next(err);
-    } else {
-      // member.member_name = req.body.member.member_name;
-      // member.phone = req.body.member.phone;
-      // member.birthdate = req.body.member.birthdate;
-      res.json({ member });
+router.put('/members/update/:id', (req, res) => {
+
+  Member.findByIdAndUpdate(req.params.id, {
+    member_name: req.body.member_name,
+    phone: req.body.phone,
+    birthdate: req.body.birthdate
+  }, { new: true }).then(member => {
+    if (!member) {
+      return res.status(404).send({
+        message: 'Member not found'
+      });
     }
+    return res.status(500).send({
+      message: 'Error updating member with id ' + req.params.id
+    })
   })
 });
 
 // delete member
-router.delete('/delete-member');
+router.delete('/members/delete/:id', (req, res) => {
+  Member.findByIdAndRemove(req.params.id)
+    .then(member => {
+      if (!member) {
+        return res.status(404).send({
+          message: "Member not found with id: " + req.params.id
+        });
+      }
+      res.send({ message: "Member deleted successfully!" });
+    }).catch(err => {
+      if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+        return res.status(404).send({
+          message: "Member not found with id: " + req.params.id
+        });
+      }
+      return res.status(500).send({
+        message: "Could not delete member with id " + req.params.id
+      });
+    })
+});
 
 // retrieve all member
-router.get('/retrieve-all-members', (req, res, next) => {
+router.get('/members/get-all-members', (req, res) => {
   Member.find().then(member => {
     res.send(member);
   }).catch(err => {
@@ -59,4 +73,27 @@ router.get('/retrieve-all-members', (req, res, next) => {
   })
 });
 
+// get a single member
+router.get('/members/get-member/:id', (req, res) => {
+  console.log('---req.body', req.body)
+  console.log('--req.params', req.params)
+  Member.findById(req.params.id)
+    .then(member => {
+      if (!member) {
+        return res.status(404).send({
+          message: 'Member not found!'
+        });
+      }
+      res.send(member);
+    }).catch(err => {
+      if (err.kind === 'ObjectId') {
+        return res.status(404).send({
+          message: 'Member not found with id: ' + req.params.id
+        });
+      }
+      return res.status(500).send({
+        message: 'Error geting member with id ' + req.params.id
+      });
+    })
+});
 module.exports = router;
