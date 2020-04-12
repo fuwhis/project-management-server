@@ -34,8 +34,6 @@ if (!isProduction) {
 if (isProduction) {
   mongoose.connect(process.env.MONGODB_URI);
 } else {
-  // mongoose.connect('mongodb://localhost:27017/grabhotelt');
-  // mongoose.set('debug', true);
   mongoose.connect(url, { useNewUrlParser: true }, (error) => {
     if (!error) {
       console.log("Success connected");
