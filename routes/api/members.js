@@ -31,4 +31,20 @@ router.post('/create-member', function (req, res, next) {
   });
 });
 
+// update member
+router.patch('/update-member/:id', function (req, res, next) {
+  Member.findByIdAndUpdate(req.payload.id, req.body, { new: true }, function (err, member) {
+    if (err) {
+      next(err);
+    } else {
+      // member.member_name = req.body.member.member_name;
+      // member.phone = req.body.member.phone;
+      // member.birthdate = req.body.member.birthdate;
+      res.json({ member });
+    }
+  })
+});
+
+// delete member
+router.delete('/delete-member', )
 module.exports = router;
