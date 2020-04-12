@@ -46,5 +46,17 @@ router.patch('/update-member/:id', function (req, res, next) {
 });
 
 // delete member
-router.delete('/delete-member', )
+router.delete('/delete-member');
+
+// retrieve all member
+router.get('/retrieve-all-members', (req, res, next) => {
+  Member.find().then(member => {
+    res.send(member);
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message || 'Error occured while retrieving members.'
+    });
+  })
+});
+
 module.exports = router;
