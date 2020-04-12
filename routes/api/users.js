@@ -65,7 +65,10 @@ router.post('/users', function(req, res, next){
   var user = new User();
 
   user.username = req.body.user.username;
-  user.email = req.body.user.email;
+  user.phone = req.body.user.phone;
+  user.birthdate = req.body.user.birthdate;
+  user.password = req.body.user.password;
+  
   // user.setPassword(req.body.user.password);
 
   user.save().then(function(){

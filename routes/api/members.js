@@ -29,11 +29,14 @@ router.post('/create-member', function (req, res, next) {
       return res.sendStatus(401);
     }
 
-    var member = new Member(req.body.member);
+    var member = new Member();
+
+    member.member_name = req.body.member.member_name;
+    member.phone = req.body.member.phone;
+    member.birthdate = req.body.member.birthdate;
 
     return member.save().then(function () {
-      console.log('---create new success', member);
-      return res.json({ member: member })
+      return res.json({ member })
     })
   });
 });

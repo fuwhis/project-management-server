@@ -12,6 +12,7 @@ var UserSchema = new mongoose.Schema({
     // required: [true, "can't be blank"],
     // match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
     // index: true,
+    trim: true,
   },
   phone: { type: Number },
   birthdate: { type: Date },
