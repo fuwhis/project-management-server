@@ -8,12 +8,35 @@ var
   passport = require('passport'),
   errorhandler = require('errorhandler'),
   mongoose = require('mongoose');
+  swaggerJSDoc = require('swagger-jsdoc'),
   url = 'mongodb://localhost:27017/grabhotelt';
 
 var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 var app = express();
+
+// swagger definition
+var swaggerDefinition = {
+  info: {
+    title: 'Node Swagger API',
+    version: '1.0.0',
+    description: 'Demonstrating how to describe a RESTful API with Swagger',
+  },
+  host: 'localhost:3000',
+  basePath: '/api',
+  // apis: ['./controllers/member.controller.js', './api/models/Member.js']
+};
+
+// options for the swagger docs
+var options = {
+  // import swaggerDefinitions
+  swaggerDefinition: swaggerDefinition,
+  // path to the API docs
+  apis: ['./routes/*.js'],
+};
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJSDoc(options);
 
 app.use(cors());
 
@@ -26,6 +49,12 @@ app.use(require('method-override')());
 app.use(express.static(__dirname + '/public'));
 
 app.use(session({ secret: 'grabhotel', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+
+// serve swagger
+app.get('/swagger.json', function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 if (!isProduction) {
   app.use(errorhandler());

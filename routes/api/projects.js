@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var Project = require("../../models/Project");
+var Member = require("../../models/Member");
 
 // create new project
 router.post('/projects/create-new', function (req, res, next) {
@@ -52,6 +53,15 @@ router.put('/projects/update/:id', (req, res) => {
 });
 
 // assign member to project
+// router.add('/projects/add-member', (req, res) => {
+//   Member.findById()
+// })
 
 // show project detail (name, list member)
+// Project.find().exec().then(list => {
+//   router.get('/project/get-detail', async (req, res) => {
+//     await Member.findOne();
+//   })
+// });
+
 module.exports = router;

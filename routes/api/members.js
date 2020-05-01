@@ -73,10 +73,30 @@ router.get('/members/get-all-members', (req, res) => {
   })
 });
 
-// get a single member
-router.get('/members/get-member/:id', (req, res) => {
-  console.log('---req.body', req.body)
-  console.log('--req.params', req.params)
+/**
+ * @swagger
+ * /api/members/{id}:
+ *   get:
+ *     tags:
+ *       - Members
+ *     description: Returns a single member
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Member's id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *     responses:
+ *       200:
+ *         description: A single member
+ *         schema:
+ *           $ref: '#/definitions/member'
+ */
+router.get('/members/:id', (req, res) => {
+  // console.log('---req.body', req.body)
+  // console.log('--req.params', req.params)
   Member.findById(req.params.id)
     .then(member => {
       if (!member) {
@@ -92,7 +112,7 @@ router.get('/members/get-member/:id', (req, res) => {
         });
       }
       return res.status(500).send({
-        message: 'Error geting member with id ' + req.params.id
+        message: 'Error getting member with id ' + req.params.id
       });
     })
 });
